@@ -82,7 +82,8 @@ var SpacebookApp = function () {
 
   var removePost = function ($clickedPost, index) {
     posts.splice(index, 1);
-    $clickedPost.remove();
+    _renderComments();    
+    _renderComments();
   };
 
   var createComment = function (text, postIndex) {
@@ -98,7 +99,7 @@ var SpacebookApp = function () {
     // remove the comment from the comments array on the correct post object
     posts[postIndex].comments.splice(commentIndex, 1);
     // removing the comment from the page
-    $clickedComment.remove();
+     _renderComments();
   };
 
   //  invoke the render method on app load
