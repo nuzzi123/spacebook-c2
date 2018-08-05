@@ -65,11 +65,9 @@ var SpacebookApp = function () {
       }
     },
 
-    removePost: function (currentPost) {
-      var $clickedPost = $(currentPost).closest('.post');
-      var id = $clickedPost.data().id;
+    removePost: function (postID) {
 
-      var post = this._findPostById(id);
+      var post = this._findPostById(postID);
 
       this.posts.splice(this.posts.indexOf(post), 1);
     },
@@ -104,7 +102,11 @@ $('.add-post').on('click', function () {
 });
 
 $('.posts').on('click', '.remove', function () {
-  app.removePost(this);
+  
+  var $clickedPost = $(this).closest('.post');
+  var postID = $clickedPost.data().id;
+
+  app.removePost(postID);
   app.renderPosts();
 });
 
