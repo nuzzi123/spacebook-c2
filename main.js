@@ -150,5 +150,4 @@ $('.posts').on('click', '.remove-comment', function () {
   app.removeComment(commentIndex, postID);
   app.renderPosts();
 }); 
-///////----------------------------------------------
  
