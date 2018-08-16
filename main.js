@@ -1,32 +1,19 @@
 var SpacebookApp = function () {
   return {
-    posts: [
-      {
-        text: "Hello world", id: 1, comments: [
-          { text: "Man, this is a comment!" },
-          { text: "Man, this is a comment!" },
-          { text: "Man, this is a comment!" }
-        ]
-      },
-      {
-        text: "Hello world", id: 2, comments: [
-          { text: "Man, this is a comment!" },
-          { text: "Man, this is a comment!" },
-          { text: "Man, this is a comment!" }
-        ]
-      },
-      {
-        text: "Hello world", id: 3, comments: [
-          { text: "Man, this is a comment!" },
-          { text: "Man, this is a comment!" },
-          { text: "Man, this is a comment!" }
-        ]
-      }
+    posts: [ 
     ],
 
     // the current id to assign to a post
-    currentId: 4,
     $posts: $('.posts'),
+
+
+    
+    setLS: function(){
+      localStorage.setItem("k" , JSON.stringify( this.posts));
+    },
+    getFromLS: function(){
+     this.posts = JSON.parse(localStorage.getItem("k") || '[]');
+    },
 
     _findPostById: function (id) {
       for (var i = 0; i < this.posts.length; i += 1) {
@@ -46,6 +33,7 @@ var SpacebookApp = function () {
       this.currentId += 1;
 
       this.posts.push(post);
+      this.setLS();
     },
 
     renderPosts: function () {
@@ -69,6 +57,7 @@ var SpacebookApp = function () {
     removePost: function (postID) {
       var post = this._findPostById(postID);
       this.posts.splice(this.posts.indexOf(post), 1);
+      this.setLS();
     },
 
     toggleComments: function (currentPost) {
@@ -82,11 +71,13 @@ var SpacebookApp = function () {
   
       // pushing the comment into the correct posts array
       this._findPostById(postID).comments.push(comment);
+      this.setLS();
     },
 
     removeComment: function (commentIndex, postID) {
       // remove the comment from the comments array on the correct post object
       this._findPostById(postID).comments.splice(commentIndex, 1); 
+      this.setLS();
     },
 
     getCommentsHTML: function (post) {
@@ -103,7 +94,7 @@ var SpacebookApp = function () {
 }
 
 var app = SpacebookApp();
-
+app.getFromLS();
 // immediately invoke the render method
 app.renderPosts();
 
